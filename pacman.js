@@ -58,13 +58,15 @@ function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
   if (powerPellets) {
-
+    powerPellets >=0
     console.log('(p) Eat Power Pellet');
+  }else {
+    console.log('You are out of Power Pellets');
   }
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
+  console.log('(1) Eat Inky (' + (inky.edible) + ')');
+  console.log('(2) Eat Blinky (' + (blinky.edible) + ')');
+  console.log('(3) Eat Pinky (' + (pinky.edible) + ')');
+  console.log('(4) Eat Clyde (' + (clyde.edible) + ')');
   console.log('(q) Quit');
 }
 
@@ -82,7 +84,9 @@ function eatDot() {
 
 function eatGhost (ghostname) {
     if (ghostname.edible) {
-      console.log('You ate' + ghostname.name);
+      console.log('You ate ' + ghostname.name + ' the ' + ghostname.character + ' ghost!');
+      score += 200;
+      ghostname.edible = false;
     }else {
       lives -= 1
       console.log(ghostname.name + ' the ' + ghostname.colour + ' ghost just ate you ');
@@ -113,7 +117,12 @@ function processInput(key) {
       eatDot();
       break;
     case 'p':
-      eatPellet();
+      if (powerPellets) {
+        powerPellets >= 0
+        eatPellet();
+      }else {
+        console.log('You have no Power Pellets to do that!');
+      }
       break;
     case '1':
       eatGhost (inky);
@@ -154,7 +163,7 @@ drawScreen();
 stdin.on('data', function(key) {
   process.stdout.write(key);
   processInput(key);
-  setTimeout(drawScreen, 2000); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
+  setTimeout(drawScreen, 4000); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
 });
 
 // Player Quits
