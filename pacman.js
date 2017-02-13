@@ -1,7 +1,7 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
-
+var powerPellets = 4;
 
 // Define your ghosts here
 var inky = {
@@ -51,6 +51,7 @@ function clearScreen() {
 
 function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives);
+  console.log('Power Pellets: ' +  powerPellets);
 }
 
 function displayMenu() {
@@ -84,6 +85,12 @@ function eatGhost (ghostname) {
     };
 }
 
+function gameOver(pacman) {
+  if (lives === 0) {
+    process.exit();
+  }
+}
+
 // Process Player's Input
 function processInput(key) {
   switch(key) {
@@ -96,15 +103,19 @@ function processInput(key) {
       break;
     case '1':
       eatGhost (inky);
+      console.log(gameOver());
       break;
     case '2':
       eatGhost (blinky);
+      console.log(gameOver());
       break;
     case '3':
       eatGhost (pinky);
+      console.log(gameOver());
       break;
     case '4':
       eatGhost (clyde);
+      console.log(gameOver());
       break;
     default:
       console.log('\nInvalid Command!');
