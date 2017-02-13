@@ -33,7 +33,7 @@ var clyde = {
   edible: false,
 };
 // replace this comment with your four ghosts setup as objects
-var ghosts = ['inky', 'blinky', 'pinky', 'clyde']
+var ghosts = [inky, blinky, pinky, clyde]
 
 // Draw the screen functionality
 function drawScreen() {
@@ -57,6 +57,10 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  if (powerPellets) {
+
+    console.log('(p) Eat Power Pellet');
+  }
   console.log('(1) Eat Inky');
   console.log('(2) Eat Blinky');
   console.log('(3) Eat Pinky');
@@ -90,6 +94,13 @@ function gameOver(pacman) {
     process.exit();
   }
 }
+function eatPellet(powerPellet) {
+  score += 50;
+  powerPellets -= 1;
+  for (ghost of ghosts) {
+    ghost.edible = true;
+  }
+}
 
 // Process Player's Input
 function processInput(key) {
@@ -100,6 +111,9 @@ function processInput(key) {
       break;
     case 'd':
       eatDot();
+      break;
+    case 'p':
+      eatPellet();
       break;
     case '1':
       eatGhost (inky);
@@ -140,7 +154,7 @@ drawScreen();
 stdin.on('data', function(key) {
   process.stdout.write(key);
   processInput(key);
-  setTimeout(drawScreen, 300); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
+  setTimeout(drawScreen, 2000); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
 });
 
 // Player Quits
